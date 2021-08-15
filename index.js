@@ -21,7 +21,7 @@ function getFileToUpload() {
     const uploadedFile = fileInput.files[0];
 
     if (uploadedFile == undefined) {
-        throw new UploadError("uploadd file first")
+        throw new UploadError("upload file first")
     }
     return uploadedFile;
 }
