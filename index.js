@@ -58,6 +58,22 @@ async function UploadFile(file) {
     return respond.json();
 }
 
+async function UploadAndReturnFile(file) {
+    const URL= `${functionUrl}?filename=${file.name}&auto-return=true`;
+    const respond = await fetch(
+        URL,
+        {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                'Access-Control-Allow-Origin': window.location.origin,
+            },
+            body: file
+        }
+    )
+    return await respond.blob();
+}
+
 async function handelSubmit() {
     const downloadLabel = document.getElementById('filename-to-download');
     const downloadButton = document.getElementById('download-btn');
@@ -91,6 +107,17 @@ async function handelSubmit() {
     }
 }
 
+function anchorDownloadFile(filename, fileURL) {
+    const anchorDownload = document.createElement('a');
+    anchorDownload.display = 'none'
+    anchorDownload.href = fileURL;
+    anchorDownload.download = filename || 'SS.docx';
+
+    document.body.appendChild(anchorDownload);
+    anchorDownload.click()
+    document.body.removeChild(anchorDownload)
+}
+
 async function handleDownload() {
     const respond = await fetch(
         fileToDownload.fileLink,
@@ -103,24 +130,44 @@ async function handleDownload() {
     )
     const blobURL = URL.createObjectURL(await respond.blob())
 
-    const anchorDownload = document.createElement('a');
-    anchorDownload.display = 'none'
-    anchorDownload.href = blobURL;
-    anchorDownload.download = fileToDownload.name || 'SS.docx';
+    anchorDownloadFile(fileToDownload.name, blobURL);
+}
 
-    document.body.appendChild(anchorDownload);
-    anchorDownload.click()
-    document.body.removeChild(anchorDownload)
+async function handleDownloadSubmit() {
+    showUploadLoading(); 
+    try {
+        const fileToUpload = getFileToUpload();
+        const docBlob = await UploadAndReturnFile(fileToUpload);
+        const docBlobURL = URL.createObjectURL(docBlob);
+    
+        let filename = fileToUpload.name;
+        if (filename.slice(0,2) == 'TC') {
+            filename = 'SS' + filename.slice(2);
+        }
+        filename = filename.split('.')[0] + '.docx';
+        anchorDownloadFile(filename, docBlobURL);
+    }
+    catch (err) {
+        if (err instanceof UploadError) {
+            alert(err.message);
+        }
+        throw err
+    }
+    finally {
+        unshowUploadLoading();
+    }
 }
 
 function setup() {
     const downloadButton = document.getElementById('download-btn');
     const submitButton = document.getElementById('submit-button');
+    const submitDownloadButton = document.getElementById("submit-button-download");
 
     downloadButton.onclick = handleDownload;
     document.getElementById('download-btn').style.display = 'none';
 
     submitButton.onclick = handelSubmit;
+    submitDownloadButton.onclick = handleDownloadSubmit;
 }
 
 
