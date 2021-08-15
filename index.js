@@ -16,6 +16,22 @@ let fileToDownload = {
     name: ''
 }
 
+let loadingSymbol = null;
+
+function showUploadLoading() {
+    loadingSymbol = document.createElement('p');
+    loadingSymbol.innerHTML = "UPLOADING";
+    loadingSymbol.style.color = 'red';
+
+    const submitArea = document.getElementById('submit-area');
+    submitArea.appendChild(loadingSymbol);
+}
+
+function unshowUploadLoading() {
+    document.getElementById('submit-area').removeChild(loadingSymbol);
+    loadingSymbol = null;
+}
+
 function getFileToUpload() {
     const fileInput = document.getElementById("file-input");
     const uploadedFile = fileInput.files[0];
@@ -50,6 +66,7 @@ async function handelSubmit() {
         downloadButton.style.display = 'none';
         downloadLabel.innerHTML = '';
         
+        showUploadLoading();
         const file = getFileToUpload();
 
         const responseBody = await UploadFile(file);
@@ -68,6 +85,9 @@ async function handelSubmit() {
             alert(err.message)
         }
         throw err
+    }
+    finally {
+        unshowUploadLoading();
     }
 }
 
