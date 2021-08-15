@@ -47,8 +47,8 @@ async function handelSubmit() {
     const downloadButton = document.getElementById('download-btn');
     
     try {
-        downloadButton.hidden = true;
-        downloadLabel.innerHTML = ''
+        downloadButton.style.display = 'none';
+        downloadLabel.innerHTML = '';
         
         const file = getFileToUpload();
 
@@ -59,8 +59,9 @@ async function handelSubmit() {
         fileToDownload.fileLink = downloadUrl;
         fileToDownload.name = filename;
 
-        downloadButton.hidden = false;
-        downloadLabel.innerHTML = filename
+        downloadButton.style.display = 'block';
+        downloadLabel.innerHTML = filename;
+        unshowUploadLoading();
     }
     catch (err) {
         if (err instanceof UploadError) {
@@ -96,10 +97,10 @@ function setup() {
     const downloadButton = document.getElementById('download-btn');
     const submitButton = document.getElementById('submit-button');
 
-    downloadButton.onclick = handleDownload
-    document.getElementById('download-btn').hidden = true;
+    downloadButton.onclick = handleDownload;
+    document.getElementById('download-btn').style.display = 'none';
 
-    submitButton.onclick = handelSubmit
+    submitButton.onclick = handelSubmit;
 }
 
 
