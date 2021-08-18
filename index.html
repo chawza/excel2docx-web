@@ -10,19 +10,20 @@
     <title>Excel2Docx!</title>
 </head>
 <body onload="setup()">
-    <div>
-        <label>Select Testcase file</label>
-    </div>
-    <div>
-        <input id="file-input" type="file" name="testcase-file" accept=".xlsx,.xls">
-    </div>
-    <div id="submit-area">
-        <button id="submit-button">SUBMIT</button>
-        <button id="submit-button-download">SUBMIT and Download</button>
-    </div>
-    <div>
-        <p id="filename-to-download"></p>
-        <button id="download-btn" style="display: none;">Download</button>
+    <div id="main-content">
+        <div>
+            <label>Select Testcase file</label>
+        </div>
+        <div>
+            <input id="file-input" type="file" name="testcase-file" accept=".xlsx,.xls">
+        </div>
+        <div id="submit-area">
+            <button id="submit-button-download">SUBMIT</button>
+        </div>
+        <div>
+            <p id="filename-to-download"></p>
+            <button id="download-btn" style="display: none;">Download</button>
+        </div>
     </div>
 </body>
 </html>

@@ -160,13 +160,11 @@ async function handleDownloadSubmit() {
 
 function setup() {
     const downloadButton = document.getElementById('download-btn');
-    const submitButton = document.getElementById('submit-button');
     const submitDownloadButton = document.getElementById("submit-button-download");
 
     downloadButton.onclick = handleDownload;
     document.getElementById('download-btn').style.display = 'none';
 
-    submitButton.onclick = handelSubmit;
     submitDownloadButton.onclick = handleDownloadSubmit;
 }
 
