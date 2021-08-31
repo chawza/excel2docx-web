@@ -58,8 +58,8 @@ async function UploadFile(file) {
     return respond.json();
 }
 
-async function UploadAndReturnFile(file) {
-    const URL= `${functionUrl}?filename=${file.name}&auto-return=true`;
+async function UploadAndReturnFile(file, uac_tc = false) {
+    const URL= `${functionUrl}?filename=${file.name}&auto-return=true&uac_tc=${uac_tc}}`;
     const respond = await fetch(
         URL,
         {
@@ -136,8 +136,9 @@ async function handleDownload() {
 async function handleDownloadSubmit() {
     showUploadLoading(); 
     try {
+        const isChecked = document.getElementById('uac-tc').checked;
         const fileToUpload = getFileToUpload();
-        const docBlob = await UploadAndReturnFile(fileToUpload);
+        const docBlob = await UploadAndReturnFile(fileToUpload, isChecked);
         const docBlobURL = URL.createObjectURL(docBlob);
     
         let filename = fileToUpload.name;
