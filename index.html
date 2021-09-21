@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,27 +8,40 @@
 
     <script type="text/javascript" src="index.js"></script>
     <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="tailwind.css">
     <title>Excel2Docx!</title>
 </head>
+
 <body onload="setup()">
-    <div id="main-content">
-        <div>
-            <label>Select Testcase file</label>
+    <div class="min-h-screen flex flex-col items-center justify-center">
+        <div class="bg-gray-800 w-96 h-40 p-5 rounded-lg">
+            <div class="relative border-dotted h-full rounded-lg border-2 border-white flex justify-center
+            items-center">
+                <div class="absolute">
+                    <div class="flex flex-col items-center">
+                        <span id="upload-message" class="block text-gray-400 font-normal text-center">
+                            Click or Drag Test Case File Here
+                        </span>
+                    </div>
+                </div>
+                <input id="file-input" class="block mt-1 h-40 w-full opacity-0" type="file" name="testcase-file"
+                    accept=".xlsx,.xls" autofocus />
+            </div>
         </div>
-        <div>
-            <input id="file-input" type="file" name="testcase-file" accept=".xlsx,.xls">
+        <div class="flex justify-between mt-1 w-96">
+            <div class="flex items-center">
+                <input id="uac-tc" type="checkbox">
+                <label class="inline font-normal ml-2" for="uac-tc">Scenario in Testcase Sheet</label>
+            </div>
+            <div id="submit-area">
+                <button
+                    class="bg-gray-800 py-2 px-5 rounded-md text-white hover:text-gray-800 hover:bg-transparent border border-gray-800 transition-all"
+                    id="submit-button-download">Upload</button>
+            </div>
         </div>
-        <div>
-            <input id="uac-tc" type="checkbox">
-            <label>scenario in testcase sheet</label>
-        </div>
-        <div id="submit-area">
-            <button id="submit-button-download">SUBMIT</button>
-        </div>
-        <div>
-            <p id="filename-to-download"></p>
-            <button id="download-btn" style="display: none;">Download</button>
-        </div>
+        <p id="filename-to-download"></p>
+        <button id="download-btn" style="display: none;">Download</button>
     </div>
 </body>
+
 </html>
