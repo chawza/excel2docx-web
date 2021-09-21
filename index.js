@@ -162,11 +162,18 @@ async function handleDownloadSubmit() {
 function setup() {
     const downloadButton = document.getElementById('download-btn');
     const submitDownloadButton = document.getElementById("submit-button-download");
+    const uploadMessage = document.getElementById('upload-message');
+    const fileInput = document.getElementById('file-input');
 
     downloadButton.onclick = handleDownload;
     document.getElementById('download-btn').style.display = 'none';
 
     submitDownloadButton.onclick = handleDownloadSubmit;
+
+
+    fileInput.onchange = function () {
+        uploadMessage.innerHTML = fileInput.value.split("\\").pop();
+    };
 }
 
 
