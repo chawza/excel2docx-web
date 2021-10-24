@@ -59,7 +59,8 @@ async function UploadFile(file) {
 }
 
 async function UploadAndReturnFile(file, uac_tc = false) {
-    const URL= `${functionUrl}?filename=${file.name}&auto-return=true&uac_tc=${uac_tc}}`;
+    const mode = uac_tc? 'comment' : 'sheet';
+    const URL= `${functionUrl}?filename=${file.name}&auto-return=true&scenario-mode=${mode}`;
     const respond = await fetch(
         URL,
         {
